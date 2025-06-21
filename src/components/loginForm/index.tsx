@@ -50,6 +50,18 @@ export default function LoginForm() {
 		);
 	};
 
+	const signInByGithub = async () => {
+		await authClient.signIn.social({
+			provider: "github",
+		});
+	};
+
+	const signInByGoogle = async () => {
+		await authClient.signIn.social({
+			provider: "google",
+		});
+	};
+
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-gray-100">
 			<form
@@ -100,6 +112,7 @@ export default function LoginForm() {
 					<button
 						type="button"
 						className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+						onClick={() => signInByGoogle()}
 					>
 						Login Google
 					</button>
@@ -107,6 +120,7 @@ export default function LoginForm() {
 					<button
 						type="button"
 						className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800"
+						onClick={() => signInByGithub()}
 					>
 						Login GitHub
 					</button>
