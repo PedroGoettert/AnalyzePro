@@ -18,6 +18,13 @@ import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/auth";
 import { prismaClient } from "@/lib/prisma";
 
+type CompanyProps = {
+	id: string;
+	name: string;
+	email: string;
+	campaigns: Campaign[];
+};
+
 export default async function Home() {
 	const session = await auth.api.getSession({
 		headers: await headers(),
