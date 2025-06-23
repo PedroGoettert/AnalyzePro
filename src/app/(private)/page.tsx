@@ -14,16 +14,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { Campaign } from "@/generated/prisma";
 import { auth } from "@/lib/auth";
 import { prismaClient } from "@/lib/prisma";
-
-type CompanyProps = {
-	id: string;
-	name: string;
-	email: string;
-	campaigns: Campaign[];
-};
+import { type CompanyProps, CompanyTable } from "@/components/companyTable";
 
 export default async function Home() {
 	const session = await auth.api.getSession({
@@ -51,7 +44,15 @@ export default async function Home() {
 		return { message: "Usuário não encontrado" };
 	}
 
-	const companys: CompanyProps[] = JSON.parse(JSON.stringify(user.Company));
+	const teste = await prismaClient.company.findMany({
+		where: {
+			userId: user.id,
+		},
+		include: {
+			campaigns: true,
+		},
+	});
+	const companys: CompanyProps[] = JSON.parse(JSON.stringify(teste));
 
 	return (
 		<div className="min-h-screen bg-gray-100">
@@ -174,38 +175,7 @@ export default async function Home() {
 					</Dialog>
 				</div>
 
-				{/* Lista de Clientes */}
-				<section>
-					<h3 className="text-2xl font-semibold mb-4">Clientes Cadastrados</h3>
-					<div className="overflow-x-auto">
-						<table className="min-w-full bg-white rounded-md shadow">
-							<thead>
-								<tr>
-									<th className="px-6 py-3 border-b text-left text-sm font-medium">
-										Empresa
-									</th>
-									<th className="px-6 py-3 border-b text-left text-sm font-medium">
-										Email
-									</th>
-									<th className="px-6 py-3 border-b text-left text-sm font-medium">
-										Projetos Ativos
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{companys.map((company) => (
-									<tr key={company.id} className="hover:bg-gray-50">
-										<td className="px-6 py-4 border-b">{company.name}</td>
-										<td className="px-6 py-4 border-b">{company.email}</td>
-										<td className="px-6 py-4 border-b">
-											{company.campaigns.length}
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</section>
+				<CompanyTable companies={companys} />
 			</main>
 		</div>
 	);
