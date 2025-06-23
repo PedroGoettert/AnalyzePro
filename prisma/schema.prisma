@@ -15,18 +15,76 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String   @id
   name          String
   email         String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+
+  sessions Session[]
+  accounts Account[]
+  Company  Company[]
 
   @@unique([email])
   @@map("user")
+}
+
+model Company {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+  // outros campos
+
+  campaigns Campaign[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@map("company")
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+
+  status Boolean @default(true)
+  source String
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id])
+
+  results CampaignResult[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaign")
+}
+
+model CampaignResult {
+  id String @id @default(cuid())
+
+  date        DateTime // Data referente ao resultado
+  impressions Int
+  clicks      Int
+  leads       Int
+  sales       Int
+  cost        Float
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaign_result")
 }
 
 model Session {
