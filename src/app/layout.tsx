@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: "analyze pro",
 	description: "Gestão de projetos voltado para quem trabalha com tráfego pago",
+	icons: {
+		icon: "./favicon.ico",
+	},
 };
 
 export default function RootLayout({
