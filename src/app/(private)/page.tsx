@@ -56,23 +56,25 @@ export default async function Home() {
 	const companys: CompanyProps[] = JSON.parse(JSON.stringify(teste));
 
 	return (
-		<div className="min-h-screen bg-gray-100">
+		<div className="min-h-screen bg-gray-50 text-gray-800">
 			<Header />
 
 			{/* Main */}
-			<main className="max-w-7xl mx-auto px-6 py-10">
+			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"> {/* Padding responsivo: px-4 para mobile, sm:px-6 para telas pequenas, lg:px-8 para telas grandes */}
+				<h1 className="text-3xl font-bold text-gray-900 mb-8">Visão Geral</h1>
+
 				{/* Ações rápidas */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+				<section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"> {/* Grid responsivo: 1 coluna no mobile (grid-cols-1), 3 colunas a partir de telas médias (md:grid-cols-3) */}
 					<Dialog>
 						<DialogTrigger asChild>
-							<Button className="bg-yellow-500 text-white rounded-lg p-6 hover:bg-yellow-600 transition">
+							<Button className="w-full bg-blue-600 text-white rounded-xl py-4 px-6 shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1"> {/* w-full garante que o botão ocupe 100% da largura da coluna, ideal para mobile */}
 								Cadastrar Empresa
 							</Button>
 						</DialogTrigger>
-						<DialogContent className="sm:max-w-[500px]">
+						<DialogContent className="sm:max-w-[500px] rounded-xl shadow-2xl"> {/* Diálogo responsivo: largura total no mobile, max-w de 500px a partir de telas pequenas (sm) */}
 							<DialogHeader>
-								<DialogTitle className="text-xl">Cadastrar Empresa</DialogTitle>
-								<DialogDescription>
+								<DialogTitle className="text-2xl font-bold text-gray-900">Cadastrar Empresa</DialogTitle>
+								<DialogDescription className="text-gray-600 mt-2">
 									Preencha os dados da empresa que irá contratar seus serviços.
 								</DialogDescription>
 							</DialogHeader>
@@ -83,14 +85,14 @@ export default async function Home() {
 
 					<Dialog>
 						<DialogTrigger asChild>
-							<Button className="bg-purple-500 text-white rounded-lg p-6 hover:bg-purple-600 transition">
+							<Button className="w-full bg-purple-600 text-white rounded-xl py-4 px-6 shadow-lg hover:bg-purple-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1"> {/* w-full para mobile */}
 								Cadastrar Projeto
 							</Button>
 						</DialogTrigger>
-						<DialogContent className="sm:max-w-[500px]">
+						<DialogContent className="sm:max-w-[500px] rounded-xl shadow-2xl"> {/* Diálogo responsivo */}
 							<DialogHeader>
-								<DialogTitle className="text-xl">Cadastrar Projeto</DialogTitle>
-								<DialogDescription>
+								<DialogTitle className="text-2xl font-bold text-gray-900">Cadastrar Projeto</DialogTitle>
+								<DialogDescription className="text-gray-600 mt-2">
 									Crie um novo projeto, serviço ou campanha vinculada à uma
 									empresa.
 								</DialogDescription>
@@ -102,14 +104,14 @@ export default async function Home() {
 
 					<Dialog>
 						<DialogTrigger asChild>
-							<Button className="bg-green-500 text-white rounded-lg p-6 hover:bg-green-600 transition">
+							<Button className="w-full bg-green-600 text-white rounded-xl py-4 px-6 shadow-lg hover:bg-green-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1"> {/* w-full para mobile */}
 								Upload de Dados
 							</Button>
 						</DialogTrigger>
-						<DialogContent className="sm:max-w-[500px]">
+						<DialogContent className="sm:max-w-[500px] rounded-xl shadow-2xl"> {/* Diálogo responsivo */}
 							<DialogHeader>
-								<DialogTitle className="text-xl">Upload de Arquivo</DialogTitle>
-								<DialogDescription>
+								<DialogTitle className="text-2xl font-bold text-gray-900">Upload de Arquivo</DialogTitle>
+								<DialogDescription className="text-gray-600 mt-2">
 									Faça upload de arquivos (.csv, .xlsx, etc.) para importar
 									dados.
 								</DialogDescription>
@@ -118,15 +120,15 @@ export default async function Home() {
 							<form className="space-y-6">
 								<div className="grid gap-4">
 									<div className="grid gap-2">
-										<Label>Selecione o Arquivo</Label>
-										<Input type="file" accept=".csv, .xlsx" required />
+										<Label className="font-medium text-gray-700">Selecione o Arquivo</Label>
+										<Input type="file" accept=".csv, .xlsx" required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500" />
 									</div>
 								</div>
 
-								<DialogFooter>
+								<DialogFooter className="pt-4">
 									<Button
 										type="submit"
-										className="w-full bg-green-500 hover:bg-green-600"
+										className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 px-5 shadow-md transition-all duration-300 ease-in-out"
 									>
 										Enviar Arquivo
 									</Button>
@@ -134,9 +136,14 @@ export default async function Home() {
 							</form>
 						</DialogContent>
 					</Dialog>
-				</div>
+				</section>
 
-				<CompanyTable companies={companys} />
+				<div className="bg-white rounded-xl shadow-lg p-6"> {/* Este contêiner se adapta ao espaço disponível, tornando-o responsivo */}
+					<h2 className="text-2xl font-bold text-gray-900 mb-6">Minhas Empresas</h2>
+					{/* Para a tabela, se ela tiver muitas colunas, você pode precisar envolver CompanyTable em um div com overflow-x-auto para rolagem horizontal no mobile */}
+					{/* Exemplo: <div className="overflow-x-auto"> <CompanyTable companies={companys} /> </div> */}
+					<CompanyTable companies={companys} />
+				</div>
 			</main>
 		</div>
 	);
