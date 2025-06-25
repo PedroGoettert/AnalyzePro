@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/auth";
 import { prismaClient } from "@/lib/prisma";
+import { CreateProjectForm } from "@/components/form/create-project-form";
 
 export default async function Home() {
 	const session = await auth.api.getSession({
@@ -95,47 +96,7 @@ export default async function Home() {
 								</DialogDescription>
 							</DialogHeader>
 
-							<form className="space-y-6">
-								<div className="grid gap-4">
-									<div className="grid gap-2">
-										<Label>Nome do Projeto</Label>
-										<Input
-											placeholder="Ex.: Gestão de Tráfego Junho"
-											required
-										/>
-									</div>
-
-									<div className="grid gap-2">
-										<Label>Descrição</Label>
-										<Input placeholder="Ex.: Campanha Google Ads para Junho" />
-									</div>
-
-									<div className="grid gap-2">
-										<Label>Empresa</Label>
-										<Input placeholder="Nome da Empresa" required />
-										{/* Ideal substituir por um Select que lista empresas */}
-									</div>
-
-									<div className="grid gap-2">
-										<Label>Data de Início</Label>
-										<Input type="date" required />
-									</div>
-
-									<div className="grid gap-2">
-										<Label>Data de Término</Label>
-										<Input type="date" required />
-									</div>
-								</div>
-
-								<DialogFooter>
-									<Button
-										type="submit"
-										className="w-full bg-purple-500 hover:bg-purple-600"
-									>
-										Cadastrar Projeto
-									</Button>
-								</DialogFooter>
-							</form>
+							<CreateProjectForm companies={companys} />
 						</DialogContent>
 					</Dialog>
 
