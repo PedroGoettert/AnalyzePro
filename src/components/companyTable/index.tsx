@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { Campaign } from "@/generated/prisma";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export type CompanyProps = {
 	id: string;
@@ -13,14 +13,13 @@ export type CompanyProps = {
 };
 
 export function CompanyTable({ companies }: { companies: CompanyProps[] }) {
-	
 	const [search, setSearch] = useState("");
-	const [currentPage, setCurrentPage] = useState(1)
-	const itensPerPage = 5
-	
+	const [currentPage, setCurrentPage] = useState(1);
+	const itensPerPage = 5;
+
 	useEffect(() => {
 		setCurrentPage(1);
-	}, [search]);
+	}, []);
 
 	const filteredCompanies = companies.filter(
 		(company) =>
@@ -36,7 +35,10 @@ export function CompanyTable({ companies }: { companies: CompanyProps[] }) {
 	const indexOfFirstItem = indexOfLastItem - itensPerPage; // Índice do primeiro item da página atual
 	console.log(indexOfFirstItem);
 
-	const currentCompanies = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem); // Itens da página atual
+	const currentCompanies = filteredCompanies.slice(
+		indexOfFirstItem,
+		indexOfLastItem,
+	); // Itens da página atual
 
 	const goToNextPage = () => {
 		if (currentPage < totalPages) {
@@ -50,12 +52,12 @@ export function CompanyTable({ companies }: { companies: CompanyProps[] }) {
 		}
 	};
 
-		
-
 	return (
 		<section className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 sm:gap-0">
-				<h3 className="text-2xl font-bold text-gray-900">Clientes Cadastrados</h3>
+				<h3 className="text-2xl font-bold text-gray-900">
+					Clientes Cadastrados
+				</h3>
 				<div className="flex w-full sm:w-auto">
 					<Input
 						name="search"
@@ -95,7 +97,10 @@ export function CompanyTable({ companies }: { companies: CompanyProps[] }) {
 						{/* Renderiza as empresas da página atual */}
 						{currentCompanies.length === 0 ? (
 							<tr>
-								<td colSpan={3} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+								<td
+									colSpan={3}
+									className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"
+								>
 									{filteredCompanies.length === 0 && search !== ""
 										? "Nenhum resultado encontrado para sua busca."
 										: "Nenhuma empresa cadastrada."}
@@ -103,7 +108,10 @@ export function CompanyTable({ companies }: { companies: CompanyProps[] }) {
 							</tr>
 						) : (
 							currentCompanies.map((company: CompanyProps) => (
-								<tr key={company.id} className="hover:bg-gray-50 transition-colors duration-150">
+								<tr
+									key={company.id}
+									className="hover:bg-gray-50 transition-colors duration-150"
+								>
 									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 										{company.name}
 									</td>
