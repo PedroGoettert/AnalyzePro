@@ -12,8 +12,6 @@ export default async function Dashboard() {
 		return redirect("/login");
 	}
 
-	console.log(session.user);
-
 	return (
 		<div>
 			<DashboardComponent />

@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { type CompanyProps, CompanyTable } from "@/components/companyTable";
 import { CreateCompanyForm } from "@/components/form/create-company-form";
-import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -57,8 +56,6 @@ export default async function Home() {
 
 	return (
 		<div className="min-h-screen bg-gray-50 text-gray-800">
-			<Header />
-
 			{/* Main */}
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 				{" "}
