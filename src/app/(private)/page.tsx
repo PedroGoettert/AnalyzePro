@@ -1,22 +1,20 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { type CompanyProps, CompanyTable } from "@/components/companyTable";
+import { CreateCampaignResultForm } from "@/components/form/create-campaign-form";
 import { CreateCompanyForm } from "@/components/form/create-company-form";
+import { CreateProjectForm } from "@/components/form/create-project-form";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/auth";
 import { prismaClient } from "@/lib/prisma";
-import { CreateProjectForm } from "@/components/form/create-project-form";
 
 export default async function Home() {
 	const session = await auth.api.getSession({
@@ -44,7 +42,7 @@ export default async function Home() {
 		return { message: "Usuário não encontrado" };
 	}
 
-	const teste = await prismaClient.company.findMany({
+	const company = await prismaClient.company.findMany({
 		where: {
 			userId: user.id,
 		},
@@ -52,7 +50,7 @@ export default async function Home() {
 			campaigns: true,
 		},
 	});
-	const companys: CompanyProps[] = JSON.parse(JSON.stringify(teste));
+	const companies: CompanyProps[] = JSON.parse(JSON.stringify(company));
 
 	return (
 		<div className="min-h-screen bg-gray-50 text-gray-800">
@@ -107,7 +105,7 @@ export default async function Home() {
 									empresa.
 								</DialogDescription>
 							</DialogHeader>
-							<CreateProjectForm companies={companys} />
+							<CreateProjectForm companies={companies} />
 						</DialogContent>
 					</Dialog>
 					<Dialog>
@@ -130,30 +128,7 @@ export default async function Home() {
 									dados.
 								</DialogDescription>
 							</DialogHeader>
-							<form className="space-y-6">
-								<div className="grid gap-4">
-									<div className="grid gap-2">
-										<Label className="font-medium text-gray-700">
-											Selecione o Arquivo
-										</Label>
-										<Input
-											type="file"
-											accept=".csv, .xlsx"
-											required
-											className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-										/>
-									</div>
-								</div>
-
-								<DialogFooter className="pt-4">
-									<Button
-										type="submit"
-										className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 px-5 shadow-md transition-all duration-300 ease-in-out"
-									>
-										Enviar Arquivo
-									</Button>
-								</DialogFooter>
-							</form>
+							<CreateCampaignResultForm companies={companies} />
 						</DialogContent>
 					</Dialog>
 				</section>
@@ -164,8 +139,8 @@ export default async function Home() {
 						Minhas Empresas
 					</h2>
 					{/* Para a tabela, se ela tiver muitas colunas, você pode precisar envolver CompanyTable em um div com overflow-x-auto para rolagem horizontal no mobile */}
-					{/* Exemplo: <div className="overflow-x-auto"> <CompanyTable companies={companys} /> </div> */}
-					<CompanyTable companies={companys} />
+					{/* Exemplo: <div className="overflow-x-auto"> <CompanyTable companies={companies} /> </div> */}
+					<CompanyTable companies={companies} />
 				</div>
 			</main>
 		</div>
