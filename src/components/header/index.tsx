@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export function Header() {
 	const [isOpen, setIsOpen] = useState(false); // Estado para controlar a abertura/fechamento do menu mobile
@@ -9,32 +10,50 @@ export function Header() {
 	return (
 		<header className="bg-white shadow-md">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-				<Link href="/" className="text-2xl font-extrabold text-gray-900 hover:text-blue-700 transition-colors duration-200">
+				<Link
+					href="/"
+					className="text-2xl font-extrabold text-gray-900 hover:text-blue-700 transition-colors duration-200"
+				>
 					Data Analytics
 				</Link>
 
 				{/* Navegação para Desktop */}
 				<nav className="hidden md:flex gap-8 items-center">
-					<Link href="/" className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg">
+					<Link
+						href="/"
+						className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg"
+					>
 						Home
 					</Link>
-					<Link href="/dashboard" className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg">
+					<Link
+						href="/dashboard"
+						className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg"
+					>
 						Dashboard
 					</Link>
-					<Link href="/projects" className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg">
+					<Link
+						href="/projetos"
+						className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg"
+					>
 						Projetos
 					</Link>
-					<Link href="/clients" className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg">
+					<Link
+						href="/clientes"
+						className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg"
+					>
 						Clientes
 					</Link>
-					<Link href="/upload" className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg">
+					<Link
+						href="/upload"
+						className="text-gray-600 hover:text-blue-700 transition-colors duration-200 font-medium text-lg"
+					>
 						Upload Dados
 					</Link>
 				</nav>
 
 				{/* Botão do Menu Hamburguer para Mobile */}
 				<div className="md:hidden flex items-center">
-					<button
+					<Button
 						onClick={() => setIsOpen(!isOpen)}
 						className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
 						aria-label="Toggle menu"
@@ -60,7 +79,7 @@ export function Header() {
 								}`}
 							></span>
 						</div>
-					</button>
+					</Button>
 				</div>
 			</div>
 
@@ -68,12 +87,15 @@ export function Header() {
 
 			{/* Menu Mobile (Slide-in Lateral Direita) */}
 			<div
-				className={`fixed top-0 right-0 bottom-0 w-64 bg-white z-50 md:hidden transform transition-transform duration-300 ease-in-out shadow-lg ${ // Adicionado shadow-lg para destacar o menu
+				className={`fixed top-0 right-0 bottom-0 w-64 bg-white z-50 md:hidden transform transition-transform duration-300 ease-in-out shadow-lg ${
+					// Adicionado shadow-lg para destacar o menu
 					isOpen ? "translate-x-0" : "translate-x-full" // Desliza da direita para fora da tela
 				}`}
 			>
-				<div className="flex justify-start p-4"> {/* Botão de fechar movido para a esquerda dentro do menu */}
-					<button
+				<div className="flex justify-start p-4">
+					{" "}
+					{/* Botão de fechar movido para a esquerda dentro do menu */}
+					<Button
 						onClick={() => setIsOpen(false)}
 						className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
 						aria-label="Close menu"
@@ -95,13 +117,13 @@ export function Header() {
 								d="M6 18L18 6M6 6l12 12"
 							/>
 						</svg>
-					</button>
+					</Button>
 				</div>
 				<nav className="flex flex-col items-start p-4 space-y-6">
 					<Link
 						href="/"
 						className="text-xl font-semibold text-gray-800 hover:text-blue-700 transition-colors duration-200 w-full py-2"
-						onClick={( ) => setIsOpen(false)}
+						onClick={() => setIsOpen(false)}
 					>
 						Home
 					</Link>
